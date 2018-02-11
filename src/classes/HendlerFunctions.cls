@@ -1,27 +1,17 @@
 public class HendlerFunctions {
     public static void rollUpNumberOfContactsOnParentAccount(Set<Id> accountIds){
-    		System.debug('====================================================');
-    		System.debug('Start RollUp == Contacts => ' + accountIds);
         
         if(accountIds.size() > 0){
         		List<Account> accountsToUpdate = new List<Account>();
+        		
         		for(Id acct : accountIds){
-        			System.debug('====================================================');
-        			System.debug('Account ID Number-' + acct);
         			AggregateResult[] countedContacts = [Select count(AccountId) amountOfContacts 
         												from Contact where AccountId = :acct];
-				System.debug('Aggregate Result Number of Contact => ' + countedContacts);
         			Decimal amountOfContacts = (Decimal) countedContacts[0].get('amountOfContacts');
-        			System.debug('Decimal number of Contacts => ' + amountOfContacts);
         			Account accountToUpdate = new Account(Id=acct);
-        			System.debug('Get account to Update => ' + accountToUpdate);
         			accountToUpdate.Number_of_Contacts__c = amountOfContacts;
-        			System.debug('Account with new number of contacts => ' + accountToUpdate);
         			accountsToUpdate.add(accountToUpdate);
-        			System.debug('Added to Array of Accounts => ' + accountToUpdate);
-        			System.debug('====================================================');
         		}
-        		System.debug('Updating these accounts => ' + accountsToUpdate);
     			update(accountsToUpdate);
         }
     }  
