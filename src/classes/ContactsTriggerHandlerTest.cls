@@ -1,6 +1,7 @@
 @isTest
 public with sharing class ContactsTriggerHandlerTest {
     @isTest static void testRollUpNumberOfContactsOnParentAccount() {
+            // GA: this test method is woefully inadequate.  You are not doing any asserts and you don't test any operation aside from Insert.  You need to test a lot more scenarios and validate the results
     		Contact[] contactsToInsert = TestDataFactory.createAccountsWithContacts(3, 2);
     		Test.startTest();
     		Database.SaveResult[] result = Database.insert(contactsToInsert, false);
